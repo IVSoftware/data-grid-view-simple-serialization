@@ -59,9 +59,10 @@ namespace data_grid_view_simple_serialization
             // Do not block on this method
             BeginInvoke((MethodInvoker)delegate 
             {
-                var onlyValidNotes = Notes.Where(_ => 
-                 !string.IsNullOrWhiteSpace(_.Title) ||
-                 !string.IsNullOrWhiteSpace(_.Message));
+                // Don't save a note if both fields are null.
+                var onlyValidNotes = Notes.Where(_ => !(
+                   string.IsNullOrWhiteSpace(_.Title) &&
+                   string.IsNullOrWhiteSpace(_.Message)));
                 File.WriteAllText(
                     _jsonPath, 
                     JsonConvert.SerializeObject(onlyValidNotes, Formatting.Indented));
