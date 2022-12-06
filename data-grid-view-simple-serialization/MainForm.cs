@@ -57,7 +57,7 @@ namespace data_grid_view_simple_serialization
         private void save()
         {
             // Do not block on this method
-            BeginInvoke((MethodInvoker)delegate 
+            Task.Run(()=> 
             {
                 // Don't save a note if both fields are null.
                 var onlyValidNotes = Notes.Where(_ => !(
